@@ -18,15 +18,17 @@ def extract_information(url):
     #url = 'https://www3.nhk.or.jp/news/html/20200605/k10012458961000.html'
     r = requests.get(url, headers=headers)
     soup = BeautifulSoup(r.content, 'lxml')
-    title = soup.find('span', {'class': 'contentTitle'}).text
-    param = soup.find('div', {'id': 'news_video'}).text
+    title = soup.find('meta', {'property': 'og:title'})['content']
+    #title = soup.find('span', {'class': 'contentTitle'}).text
+    param = soup.find('iframe', src=True)['src'].split('?')[0]\
+            .split('/')[-1].strip('.html')
     return title, param
 
 def main():
     url = sys.argv[1]
     title, param = extract_information(url)
     m3u8_url = 'https://nhks-vh.akamaihd.net/i/news/' \
-               '{}/master.m3u8'.format(param)
+               '{}.mp4/master.m3u8'.format(param)
     command = ffmpeg_command.format(m3u8_url, title)
     os.system(command)
 
