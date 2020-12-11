@@ -15,11 +15,9 @@ ffmpeg_command = 'ffmpeg -i "{}" -bsf:a aac_adtstoasc' \
 
 
 def extract_information(url):
-    #url = 'https://www3.nhk.or.jp/news/html/20200605/k10012458961000.html'
     r = requests.get(url, headers=headers)
     soup = BeautifulSoup(r.content, 'lxml')
     title = soup.find('meta', {'property': 'og:title'})['content']
-    #title = soup.find('span', {'class': 'contentTitle'}).text
     param = soup.find('iframe', src=True)['src'].split('?')[0]\
             .split('/')[-1].strip('.html')
     return title, param
