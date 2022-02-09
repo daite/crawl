@@ -6,7 +6,7 @@ import os
 url = "https://www.omnycontent.com/d/playlist/67122501-9b17-4d77-84bd-a93d00dc791e/3c31cad9-230a-4a5f-b487-a9de001adcdd/39cee2d4-8502-4b84-b11b-a9de001ca4cc/podcast.rss"
 soup = BS(requests.get(url).content, 'lxml')
 links = soup.find_all("media:content", type="audio/mpeg")
-for link in links[10:20]:
+for link in links[:1]:
     r = requests.head(link['url'])
     headers = r.headers
     down_url = headers['location']
