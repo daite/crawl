@@ -9,7 +9,7 @@ cozy_doctor_url = "https://www.omnycontent.com/d/playlist/67122501-9b17-4d77-84b
 def download_mp3_files(url):
     soup = BS(requests.get(url).content, 'lxml')
     links = soup.find_all("media:content", type="audio/mpeg")
-    for link in links[:4]:
+    for link in links[:1]:
         r = requests.head(link['url'])
         headers = r.headers
         down_url = headers['location']
